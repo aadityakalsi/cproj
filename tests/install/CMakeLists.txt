@@ -18,7 +18,7 @@ target_include_directories(
   tests_install
   PRIVATE ${TESTS_DIR})
 
-target_link_libraries(tests_install <PKG>::<PKG>)
+target_link_libraries(tests_install <PKG>)
 
 if (WIN32)
   set(path_run PATH="\$PATH$<SEMICOLON>$<TARGET_FILE_DIR:<PKG>::<PKG>>")

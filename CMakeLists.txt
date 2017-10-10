@@ -31,8 +31,7 @@ project(<PKG> LANGUAGES C CXX VERSION 0.1.1)
 
 include(cmake/deps.cmake)
 
-# eg.
-# set(deps libuv::uv)
+# eg. set(deps libuv::uv)
 set(deps )
 build_deps("${deps}")
 
@@ -56,7 +55,6 @@ endif(UNIX)
 msg("Got project source dir: ${PROJECT_SOURCE_DIR}")
 
 file(GLOB_RECURSE export_hdr ${PROJECT_SOURCE_DIR}/export/*.h ${PROJECT_SOURCE_DIR}/export/*.hpp)
-
 file(GLOB_RECURSE src_files ${PROJECT_SOURCE_DIR}/src/*.c ${PROJECT_SOURCE_DIR}/src/*.cpp)
 
 msg("Got export hdrs: ${export_hdr}")
@@ -151,7 +149,7 @@ install(
 
 install(
   EXPORT <PKG>Targets
-  NAMESPACE <PKG>
+  # NAMESPACE <PKG>
   DESTINATION ${cmake_config_dir}
   COMPONENT dev)
 
@@ -168,8 +166,8 @@ include(tests.cmake)
 
 ## packaging
 
-set(CPACK_RESOURCE_FILE_LICENSE ${CMAKE_CURRENT_SOURCE_DIR}/LICENSE)
-set(CPACK_PACKAGE_VENDOR "Aaditya Kalsi")
-set(CPACK_PACKAGE_CONTACT "akalsi.dev@gmail.com")
-set(CPACK_STRIP_FILES 1)
-include(CPack)
+# set(CPACK_RESOURCE_FILE_LICENSE ${CMAKE_CURRENT_SOURCE_DIR}/LICENSE)
+# set(CPACK_PACKAGE_VENDOR "")
+# set(CPACK_PACKAGE_CONTACT "")
+# set(CPACK_STRIP_FILES 1)
+# include(CPack)
