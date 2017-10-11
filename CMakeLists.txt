@@ -99,32 +99,28 @@ target_include_directories(
 
 target_link_libraries(<PKG> PRIVATE ${deps})
 
-#target_compile_features(
-#  <PKG>
-#  PUBLIC
-#  cxx_nullptr
-#  cxx_lambdas
-#  cxx_auto_type
-#  cxx_static_assert)
+# target_compile_features(
+#   <PKG>
+#   PUBLIC
+#   cxx_nullptr
+#   cxx_lambdas
+#   cxx_auto_type
+#   cxx_static_assert)
 
 ## configure exports
 
-configure_file(
+include(CMakePackageConfigHelpers)
+
+set(cmake_config_dir lib/cmake/<PKG>)
+
+configure_package_config_file(
   cmake/<PKG>Config.cmake.in
-  ${PROJECT_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/<PKG>Config.cmake @ONLY)
+  ${PROJECT_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/<PKG>Config.cmake
+  INSTALL_DESTINATION ${cmake_config_dir})
 
 set(version_config ${PROJECT_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/<PKG>ConfigVersion.cmake)
-include(CMakePackageConfigHelpers)
 write_basic_package_version_file(
   ${version_config} VERSION ${PROJECT_VERSION} COMPATIBILITY AnyNewerVersion)
-
-## set up install
-
-export(
-  TARGETS <PKG>
-  FILE ${PROJECT_BINARY_DIR}/<PKG>Targets.cmake)
-
-export(PACKAGE <PKG>)
 
 ## install configs
 
@@ -140,8 +136,6 @@ install(
   DIRECTORY export/
   DESTINATION include)
 
-set(cmake_config_dir lib/cmake/<PKG>)
-
 install(
   FILES ${PROJECT_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/<PKG>Config.cmake ${version_config}
   DESTINATION ${cmake_config_dir}
@@ -149,7 +143,7 @@ install(
 
 install(
   EXPORT <PKG>Targets
-  # NAMESPACE <PKG>
+  NAMESPACE <PKG>::
   DESTINATION ${cmake_config_dir}
   COMPONENT dev)
 

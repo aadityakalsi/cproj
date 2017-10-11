@@ -10,12 +10,12 @@
 #  define VER_DEF_FOUND 0
 #endif
 
-void exportHdr(void)
+void api_macro(void)
 {
     testThat(1 == VER_DEF_FOUND);
 }
 
 setupSuite(exports)
 {
-    addTest(exportHdr);
+    addTest(api_macro);
 }

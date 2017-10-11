@@ -7,26 +7,28 @@
 #  <PKGUPPER>_EXECUTABLE   - executable if any
 
 # Compute paths
-get_filename_component(<PKGUPPER>_CMAKE_DIR "${CMAKE_CURRENT_LIST_FILE}" PATH)
-set(<PKGUPPER>_INCLUDE_DIRS include)
 
-# Our library dependencies (contains definitions for IMPORTED targets)
-if(NOT TARGET <PKG> AND NOT <PKGUPPER>_BINARY_DIR)
-  include("${<PKGUPPER>_CMAKE_DIR}/<PKG>Targets.cmake")
-endif()
+@PACKAGE_INIT@
 
-# These are IMPORTED targets created by <PKG>Targets.cmake
-set(<PKGUPPER>_LIBRARIES <PKG>)
-set(<PKGUPPER>_EXECUTABLE )
+include("${CMAKE_CURRENT_LIST_DIR}/@PROJECT_NAME@Targets.cmake")
+check_required_components("@PROJECT_NAME@")
 
-get_target_property(_tgt_type <PKG> TYPE)
-string(COMPARE EQUAL "${_tgt_type}" "STATIC_LIBRARY" _is_static_lib)
+## info
+
+macro(msg m)
+  message("  == [@PROJECT_NAME@] ==  ${m}")
+endmacro(msg)
+
+msg("Importing target -> @PROJECT_NAME@")
+set(_is_shared_lib @BUILD_SHARED_LIBS@)
+string(COMPARE EQUAL "${_is_shared_lib}" "0" _is_static_lib)
 if (_is_static_lib)
   # include dependencies; static libs are linked to their deps publicly
   set(_deps "@deps@")
   foreach(_dep ${_deps})
     string(REPLACE ":" ";" _pkg_name ${_dep})
     list(GET _pkg_name 0 _pkg_name)
+    msg("Finding dep package -> ${_pkg_name}")
     find_package(${_pkg_name} CONFIG)
   endforeach()
 endif()
