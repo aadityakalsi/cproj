@@ -69,6 +69,16 @@ add_library(<PKG> ${src_files} ${export_hdr})
 if (BUILD_SHARED_LIBS)
   set(build_flag BUILDING_<PKGUPPER>_SHARED)
   set(pub_build_flag )
+  if (APPLE)
+    foreach(_dep ${deps})
+      get_target_property(_loc ${_dep} LOCATION)
+      get_filename_component(_fn ${_loc} NAME)
+      add_custom_command(
+        TARGET <PKG>
+        POST_BUILD COMMAND
+        ${CMAKE_INSTALL_NAME_TOOL} -change ${_fn} @rpath/${_fn} $<TARGET_FILE:<PKG>>)
+    endforeach()
+  endif()
 else()
   set(build_flag )
   set(pub_build_flag USE_<PKGUPPER>_STATIC)
