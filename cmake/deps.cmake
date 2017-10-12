@@ -9,7 +9,7 @@ macro(build_deps deps)
     find_package(${_pkg_name} CONFIG)
     if (WIN32 OR APPLE)
       if (BUILD_SHARED_LIBS)
-        set(_dll_dir ${CMAKE_BINARY_DIR}/${CMAKE_CFG_INTDIR})
+        set(_dll_dir ${CMAKE_BINARY_DIR}/${CMAKE_BUILD_TYPE})
         # copy DLLs to build directory to allow tests to run
         get_target_property(_loc ${_pkg} LOCATION)
         file(COPY ${_loc} DESTINATION ${_dll_dir})
