@@ -52,3 +52,7 @@ cat $srcDir/tests/install/CMakeLists.txt | sed "s/<PKG>/$projName/g" > $projDir/
 
 # copy LICENSE
 cat $srcDir/LICENSE | sed "s/<YEAR>/`date +%Y`/g" > $projDir/LICENSE
+
+# copy travis / appveyor files
+cp $srcDir/.travis.yml $projDir
+cat $srcDir/appveyor.yml | sed "s/<PKG>/$projName/g" > $projDir/appveyor.yml
