@@ -1,8 +1,8 @@
 environment:
   PROJ: "c:/projects/<PKG>"
   matrix:
-    - shared: 0
-    - shared: 1
+    - shared: "0"
+    - shared: "1"
 
 platform:
   - x86
