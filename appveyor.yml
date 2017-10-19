@@ -1,8 +1,8 @@
 environment:
   PROJ: "c:/projects/<PKG>"
   matrix:
-    - shared: "0"
-    - shared: "1"
+    - shared: 0
+    - shared: 1
 
 platform:
   - x86
@@ -20,7 +20,9 @@ configuration:
 before_build:
   - echo Running cmake...
   - cd /d %PROJ%
-  - cmd: if "%platform%"=="x86" bash -c "env GENERATOR='Visual Studio 14' CMAKE_BUILD_TYPE=%configuration% -DBUILD_SHARED_LIBS=%shared% ./tests-install.sh"
-  - cmd: if "%platform%"=="x64" bash -c "env GENERATOR='Visual Studio 14 Win64' CMAKE_BUILD_TYPE=%configuration% -DBUILD_SHARED_LIBS=%shared% ./tests-install.sh"
+  - cmd: if "%platform%"=="x86" bash -c "env GENERATOR='Visual Studio 14' CMAKE_BUILD_TYPE=$configuration BUILD_SHARED_LIBS=$shared ./tests-install.sh"
+  - cmd: if "%platform%"=="x64" bash -c "env GENERATOR='Visual Studio 14 Win64' CMAKE_BUILD_TYPE=$configuration BUILD_SHARED_LIBS=$shared ./tests-install.sh"
   # success
+  - cmd: if "%shared%"=="0" cd _install && 7z a "../<PKG>-%configuration%-%platform%-static.zip" * && cd .. && appveyor PushArtifact "<PKG>-%configuration%-%platform%-static.zip"
+  - cmd: if "%shared%"=="1" cd _install && 7z a "../<PKG>-%configuration%-%platform%-shared.zip" * && cd .. && appveyor PushArtifact "<PKG>-%configuration%-%platform%-shared.zip"
   - appveyor exit
