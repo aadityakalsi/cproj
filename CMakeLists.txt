@@ -31,9 +31,14 @@ project(<PKG> LANGUAGES C CXX VERSION 0.1.1)
 
 include(cmake/deps.cmake)
 
-# eg. set(deps libuv::uv)
+# eg. set(pkgs libuv::uv), set(deps libuv::uv)
+#  or set(pkgs PocoCpp),   set(deps Poco::Foundation)
+set(pkgs )
 set(deps )
-build_deps("${deps}")
+
+download_pkg("${pkgs}")
+# find_package(...)
+find_deps("${deps}")
 
 ## set to export explicit exports only
 
