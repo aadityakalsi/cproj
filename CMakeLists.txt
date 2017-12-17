@@ -167,7 +167,7 @@ install(
   DESTINATION share/<PKG>
   RENAME LICENSE.<PKG>)
 
-install_deps("${deps}" INCLUDE_HEADERS) # or EXCLUDE_HEADERS
+install_pkgs("${pkgs}" INCLUDE_HEADERS) # or EXCLUDE_HEADERS
 
 ## tests
 
