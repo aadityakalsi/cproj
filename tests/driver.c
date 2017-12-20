@@ -44,7 +44,7 @@ int main(int argc, char const* argv[])
             suite = TESTS[i].suite;
             printf("suite: %s\n", suite);
         }
-        printf(" %3d  %s: ", i, TESTS[i].name);
+        printf(" %4d  %s: ", i, TESTS[i].name);
         fflush(stdout);
         int val = setjmp(JMP_BUF);
         if (val == 0) {
