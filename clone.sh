@@ -59,3 +59,6 @@ cat $srcDir/appveyor.yml | sed "s/<PKG>/$projName/g" > $projDir/appveyor.yml
 
 # copy createhdr/createsrc scripts
 cp $srcDir/createhdr.sh $srcDir/createsrc.sh $srcDir/createtest.sh $projDir/
+
+# copy ChangeLog.txt
+cp $srcDir/ChangeLog.txt $projDir/
