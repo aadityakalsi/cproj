@@ -106,7 +106,7 @@ target_compile_definitions(
 
 target_include_directories(
   <PKG>
-  PRIVATE include
+  PRIVATE src
   PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/export>
          $<INSTALL_INTERFACE:include>)
 
