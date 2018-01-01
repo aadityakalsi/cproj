@@ -56,3 +56,6 @@ cat $srcDir/LICENSE | sed "s/<YEAR>/`date +%Y`/g" > $projDir/LICENSE
 # copy travis / appveyor files
 cp $srcDir/.travis.yml $projDir
 cat $srcDir/appveyor.yml | sed "s/<PKG>/$projName/g" > $projDir/appveyor.yml
+
+# copy createhdr/createsrc scripts
+cp $srcDir/createhdr.sh $srcDir/createsrc.sh $srcDir/createtest.sh $projDir/
