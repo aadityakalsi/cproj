@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 if [ "$#" -ne 1 ]; then
 read -r -d '' help << EOM
