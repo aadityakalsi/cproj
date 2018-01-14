@@ -61,3 +61,14 @@ cp $srcDir/createhdr.sh $srcDir/createsrc.sh $srcDir/createtest.sh $projDir/
 
 # copy ChangeLog.txt
 cp $srcDir/ChangeLog.txt $projDir/
+
+# create a .gitignore
+sh -c "cat > $projDir/.gitignore" <<EOF
+# gitignore for $projName
+.hunter/
+_build/
+_install/
+tests/install/_source
+tests/install/_build
+tests/install/testLog.txt
+EOF
