@@ -130,9 +130,11 @@ BraceWrapping:
   AfterEnum: true
   AfterUnion: true
   AfterNamespace: false
+  BeforeElse: true
 IndentPPDirectives: AfterHash
 AlignEscapedNewlines: Left
 AlignOperands: true
+ConstructorInitializerIndentWidth: 0
 FixNamespaceComments: true
 #IncludeBlocks: Regroup
 IndentCaseLabels: false
