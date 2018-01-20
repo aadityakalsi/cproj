@@ -57,8 +57,32 @@ cat $srcDir/tests.cmake | sed "s/<PKG>/$projName/g" > $projDir/tests.cmake
 cat $srcDir/tests/install/CMakeLists.txt | sed "s/<PKG>/$projName/g" > $projDir/tests/install/CMakeLists.txt
 
 # copy LICENSE
-echo 'Copying LICENSE...'
-cat $srcDir/LICENSE | sed "s/<YEAR>/`date +%Y`/g" > $projDir/LICENSE
+echo 'Creating LICENSE (BSD 2-clause)...'
+sh -c "cat > $projDir/LICENSE" <<EOF
+Copyright `date +%Y` `git config --global user.name` (`git config --global user.email`)
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+1. Redistributions of source code must retain the above copyright notice,
+   this list of conditions and the following disclaimer.
+2. Redistributions in binary form must reproduce the above copyright notice,
+   this list of conditions and the following disclaimer in the documentation
+   and/or other materials provided with the distribution.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+POSSIBILITY OF SUCH DAMAGE.
+EOF
 
 # copy travis / appveyor files
 echo 'Copying TravisCI and AppVeyor files...'
@@ -88,21 +112,38 @@ EOF
 # set up clang-format
 echo 'Creating a clang-format file...'
 sh -c "cat > $projDir/.clang-format" <<EOF
+# clang-format options for $projName
 BasedOnStyle: Mozilla
+AlwaysBreakAfterReturnType: None
+AlwaysBreakAfterDefinitionReturnType: None
+BreakConstructorInitializersBeforeComma: false
 IndentWidth: 4
 Language: Cpp
-PointerAlignment: Right
+PointerAlignment: Left
 ColumnLimit: 80
 UseTab: Never
 BreakBeforeBraces: Custom
 BraceWrapping:
   AfterFunction: true
   AfterStruct: true
+  AfterClass: true
   AfterEnum: true
   AfterUnion: true
+  AfterNamespace: false
 IndentPPDirectives: AfterHash
 AlignEscapedNewlines: Left
 AlignOperands: true
+FixNamespaceComments: true
+#IncludeBlocks: Regroup
+IndentCaseLabels: false
+NamespaceIndentation: None
+ReflowComments: true
+SortIncludes: true
+SortUsingDeclarations: true
+SpaceBeforeParens: ControlStatements
+SpaceInEmptyParentheses: false
+SpacesInParentheses: false
+SpacesInAngles: false
 EOF
 
 echo 'Creating format-code.sh script...'
@@ -110,6 +151,9 @@ sh -c "cat > $projDir/format-code.sh" <<EOF
 #!/usr/bin/env bash
 srcdir=\$(readlink -f \$(dirname "\$0"))
 cd "\$srcdir"
+shopt -s nullglob
 clang-format -i export/$projName/*.h* src/$projName/*.c* src/$projName/*.h* tests/*.c*
 EOF
 chmod u+x $projDir/format-code.sh
+
+echo "`tput bold`NOTE`tput sgr0`: Please modify LICENSE and scripts to your preference"
