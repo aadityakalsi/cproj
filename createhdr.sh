@@ -15,9 +15,14 @@ fileabs=`readlink -f $file`
 filedir=$(basename $(dirname "$fileabs"))/"$filename"
 include_guard=`echo $filedir | tr '[:lower:]' '[:upper:]' | sed 's/\./_/g' | sed 's/\//_/g'`
 
+srcdir=$(readlink -f $(dirname "$0"))
+
+IFS=''
 read -r -d '' content << EOM
 /*! $filename */
-
+/*!
+`cat $srcdir/LICENSE | sed 's/^/ \* /' | sed 's/ \* $/ \*/'`
+ */
 #ifndef $include_guard
 #define $include_guard
 
