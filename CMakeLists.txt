@@ -49,7 +49,7 @@ set(CMAKE_CXX_VISIBILITY_PRESET hidden)
 
 if (UNIX)
   if(APPLE)
-    set(CMAKE_INSTALL_NAME_DIR "@rpath/")
+    set(CMAKE_INSTALL_NAME_DIR "@executable_path/../lib")
   else()
     set(CMAKE_INSTALL_RPATH "\$ORIGIN/../lib")
   endif()
@@ -81,7 +81,7 @@ if (BUILD_SHARED_LIBS)
       add_custom_command(
         TARGET <PKG>
         POST_BUILD COMMAND
-        ${CMAKE_INSTALL_NAME_TOOL} -change ${_fn} @rpath/${_fn} $<TARGET_FILE:<PKG>>)
+        ${CMAKE_INSTALL_NAME_TOOL} -change ${_fn} @executable_path/../lib/${_fn} $<TARGET_FILE:<PKG>>)
     endforeach()
   endif()
 else()
