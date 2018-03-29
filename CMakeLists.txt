@@ -14,8 +14,8 @@ endif()
 set(HUNTER_BUILD_SHARED_LIBS ${BUILD_SHARED_LIBS})
 include(cmake/HunterGate.cmake)
 HunterGate(
-  URL "https://github.com/ruslo/hunter/archive/v0.19.121.tar.gz"
-  SHA1 "4cf307799ec543084dd5bada002feea066e8c203")
+  URL "https://github.com/ruslo/hunter/archive/v0.20.31.tar.gz"
+  SHA1 "65c8f2292566aedb2fe10e08e09c74dda8e5d07a")
 
 ## info
 
